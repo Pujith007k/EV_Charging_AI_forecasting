@@ -16,7 +16,7 @@ st.title("⚡ SmartGrid AI FINAL")
 
 # Prediction
 try:
-    r=requests.get("http://127.0.0.1:8000/predict")
+    r=requests.get("https://evchargingaiforecasting-egxcmkcikqxzh4cc4htv72.streamlit.app//predict")
     st.write("Next Demand:",r.json()["prediction"])
 except:
     st.warning("Run backend first")
