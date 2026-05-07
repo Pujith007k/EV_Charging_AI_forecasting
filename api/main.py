@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
 import os
+import numpy as np
 
 app = FastAPI()
 
@@ -10,4 +11,8 @@ def pred():
         from utils.data_generator import *
     
     df = pd.read_csv("data/ev_data.csv")
-    return {"prediction": float(df.ev_demand.mean())}
+
+    # Simple prediction (fast + stable)
+    prediction = np.mean(df["ev_demand"].tail(10))
+
+    return {"prediction": float(prediction)}
