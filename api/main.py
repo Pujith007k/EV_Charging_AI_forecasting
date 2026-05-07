@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 import pandas as pd
-from models.lstm_model import train,predict
+import os
 
-app=FastAPI()
+app = FastAPI()
 
 @app.get("/predict")
 def pred():
-    df=pd.read_csv("data/ev_data.csv")
-    s=df.ev_demand.values
-    m=train(s.reshape(-1,1))
-    p=predict(m,s)
-    return {"prediction":float(p)}
+    if not os.path.exists("data/ev_data.csv"):
+        from utils.data_generator import *
+    
+    df = pd.read_csv("data/ev_data.csv")
+    return {"prediction": float(df.ev_demand.mean())}
