@@ -5,11 +5,12 @@ import folium
 from streamlit_folium import st_folium
 import matplotlib.pyplot as plt
 import numpy as np
-from models.explain import explain
 import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from models.explain import explain
 
 st.title("⚡ SmartGrid AI FINAL")
 
