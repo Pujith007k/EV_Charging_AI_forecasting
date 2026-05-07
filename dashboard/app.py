@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import streamlit as st
 import pandas as pd
 import requests
@@ -5,10 +8,6 @@ import folium
 from streamlit_folium import st_folium
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from models.explain import explain
 
@@ -22,7 +21,20 @@ try:
 except:
     st.warning("Run backend first")
 
-df=pd.read_csv("data/ev_data.csv")
+
+if not os.path.exists("data/ev_data.csv"):
+    import numpy as np
+    import pandas as pd
+
+    os.makedirs("data", exist_ok=True)
+    df = pd.DataFrame({
+        "lat": np.random.uniform(12.9, 13.1, 100),
+        "lon": np.random.uniform(77.5, 77.7, 100),
+        "ev_demand": np.random.randint(10, 120, 100)
+    })
+    df.to_csv("data/ev_data.csv", index=False)
+else:
+    df = pd.read_csv("data/ev_data.csv")
 
 # Map
 st.subheader("📍 Demand Map")
